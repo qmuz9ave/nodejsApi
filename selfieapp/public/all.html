@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.min.js"></script>
+        <title>ALL DATA</title>
+        <ul style="display: flex;">
+            <li><a href="/"><h1>Index</h1></a></li>&nbsp; <h1> /</h1> &nbsp;
+            <li style="display: flex; float: left;"><a href="/all.html"><h1>Log</h1></a></li>
+        </ul>
+    </head>
+    <body>
+        <h1>ALL DATA FROM DB</h1>
+        <hr>
+        <script>
+            function setup(){
+                async function getData(){
+            const response=await fetch('/api');
+            const json =await response.json();
+            //console.log(json);
+            for (item of json ){
+               const root=document.createElement('div'); 
+               const geo=document.createElement('div'); 
+               const seconds=document.createElement('div');
+               const  image=document.createElement('img'); 
+               geo.textContent= `latitude: ${item.latitude},longitude: ${item.longitude}`;
+               const datestring=new Date(item.timestamp).toLocaleString();
+               seconds.textContent=`${datestring}`;
+               image.src=item.image64;
+
+               root.append(geo,seconds,image);
+               document.body.append(root);
+            console.log(item.timestamp);
+
+             }
+           
+            }
+            getData();
+            }
+            
+        </script>
+    </body>
+</html>
